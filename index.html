@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telredor v0.1</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+
+<body>
+  <div id="teste"></div>
+
+  <div class="ficha-personagem">
+    <form id="ficha" name="ficha" onsubmit="event.preventDefault();">
+      <div id="nomeContainer">
+        <label>Nome: </label>
+        <select id="nome" name="nome">
+          <option value="krom">Krom</option>
+          <option value="leia">Léia</option>
+          <option value="thabata">Thabata</option>
+          <option value="ranni">Ranni</option>
+          <option value="olivia">Olivia</option>
+          <option value="theodore">Theodore</option>
+          <option value="ramhaurg">Ramhaurg</option>
+        </select>
+        <button class="salvar" onclick="salvarFormulario('ficha');">Salvar</button>
+        <button class="carregar" onclick="pegarDataDoCSV('ficha');">Carregar</button>
+      </div>
+      <div class="personagem-info">
+        <div class="info-box">
+          <div class="info-item top">
+            <label>Vitalidade</label>
+            <input type="text" inputmode="numeric" id="vitalidadeAtual" name="vitalidadeAtual" value="100"> /
+            <input type="text" inputmode="numeric" id="vitalidadeMaxima" name="vitalidadeMaxima" value="100">
+          </div>
+          <div class="info-item top">
+            <label>Estamina</label>
+            <input type="text" inputmode="numeric" id="estaminaAtual" name="estaminaAtual" value="100"> /
+            <input type="text" inputmode="numeric" id="estaminaMaxima" name="estaminaMaxima" value="100">
+          </div>
+
+          <div class="info-item top">
+            <label>Mana</label>
+            <input type="text" inputmode="numeric" id="manaAtual" name="manaAtual" value="100"> /
+            <input type="text" inputmode="numeric" id="manaMaxima" name="manaMaxima" value="100">
+          </div>
+          <div class="info-item bottom">
+            <label>Mitigação & Gasto</label>
+            <input type="text" id="vitalidadeMitigacao" name="vitalidadeMitigacao" value="0%"> |
+            <button class="somar">+</button>
+            <input type="text" inputmode="numeric" id="vitalidadeGasto" value="0">
+            <button class="subtrair">-</button>
+          </div>
+          <div class="info-item bottom">
+            <label>Mitigação & Gasto</label>
+            <input type="text" id="estaminaMitigacao" name="estaminaMitigacao" value="0%"> |
+            <button class="somar">+</button>
+            <input type="text" inputmode="numeric" id="estaminaGasto" value="0">
+            <button class="subtrair">-</button>
+          </div>
+          <div class="info-item bottom">
+            <label>Mitigação & Gasto</label>
+            <input type="text" id="manaMitigacao" name="manaMitigacao" value="0%"> |
+            <button class="somar">+</button>
+            <input type="text" inputmode="numeric" id="estaminaGasto" value="0">
+            <button class="subtrair">-</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+    <div class="tabela-box">
+      <div class="center-it copiar">
+        <button>Control+V</button> | <input id="neutra" />
+      </div>
+      <form id="formularioTurno" name="turno" onsubmit="event.preventDefault();">
+        <section id='turnoRecursos'></section>
+        <h3 class="block-it">Turno</h3>
+        <button class="block-it" class="encerrar" onclick="encerrarTurno();">Encerrar turno</button>
+        <table class="tabela" id="turno">
+          <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Recurso</th>
+            <th>Custo</th>
+            <th>Efeito</th>
+          </tr>
+          <tr>
+            <td><button type="button" class="remover" onclick="removerAcao(this);">x</button></td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+            <td>Placeholder</td>
+          </tr>
+        </table>
+      </form>
+    </div>
+
+    <div class="tabela-box">
+      <form id="acao" name="acao" onsubmit="event.preventDefault();">
+        <input type="text" id="pesquisar" onkeyup="pesquisarAcao();" placeholder="Pesquisar.."> |
+        <button type="button" class="salvar" onclick="salvarFormulario('acao');">Salvar</button>
+        <button type="button" class="carregar" onclick="pegarDataDoCSV('acao');">Carregar</button>
+        <table class="tabela" id="acoes">
+          <tr>
+            <th></th>
+            <th>Nome</th>
+            <th>Recurso</th>
+            <th>Custo</th>
+            <th>Efeito</th>
+          </tr>
+          <tr>
+            <td>
+            </td>
+            <td>
+              <input id="acaoNome" class="text" name="nome" />
+            </td>
+            <td>
+              <select id="acaoRecurso" name="recurso">
+                <option value="estamina">Estamina</option>
+                <option value="mana">Mana</option>
+                <option value="vitalidade">Vitalidade</option>
+                <option value="nenhum" selected="selected">Nenhum</option>
+              </select>
+            </td>
+            <td>
+              <input type="text" inputmode="numeric" id="acaoCusto" class="custo" name="custo" />
+              <!--<div class="dropdown">
+                      <button id="custos" class="dropdown">A</button>
+                      <div id="custoOpcoes" class="dropdown-content">
+                      </div>
+                    </div>-->
+            </td>
+            <td>
+              <input type="text" id="acaoEfeito" class="text" name="efeito" />
+            </td>
+          </tr>
+          <tr>
+            <td><button type="button" class="adicionar" onclick="adicionarAcao(this);">+</button></td>
+            <td>A</td>
+            <td>Estamina</td>
+            <td>2</td>
+            <td>+1 Arroz</td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
