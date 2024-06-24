@@ -1,3 +1,44 @@
+:root {
+  --background: #f4f4f4;
+  --container: #ffffff;
+  --subcontainer: #f9f9f9;
+  --divisores: #ccc;
+  --focus: #f9f9f9;
+  --hover:#f4f4f4;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+select {
+  -o-appearance: none;
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+button:focus,
+input:focus,
+span:focus {
+  outline: none !important;
+  background-color: var(--focus);
+}
+
+button,
+input {
+  transition: all .5s;
+}
+
 html {
   height: 100%;
   width: 100%;
@@ -5,36 +46,37 @@ html {
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
+  background-color: var(--background);
   margin: 0;
   padding: 20px;
 }
 
 body button {
   background: white;
-  border: 1px solid #ccc;
+  border: 1px solid var(--divisores);;
   border-radius: 5px;
-  transition: all .5s;
 }
 
 body button:hover {
-  background: #f4f4f4;
+  background: var(--hover);
 }
 
 body input,
 body select {
-  border: 1px solid #ccc;
+  border: 1px solid var(--divisores);;
   border-radius: 5px;
 }
 
-.somar,
-.subtrair,
 .remover,
 .adicionar {
-  border-radius: 5px;
-  height: 35px;
-  width: 30px;
+  height: 26px;
+  width: 22px;
   font-weight: bold;
+}
+
+.subtrair {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
 }
 
 .center-it {
@@ -47,7 +89,7 @@ body select {
 }
 
 .ficha-personagem {
-  background-color: #ffffff;
+  background-color: var(--container);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -58,22 +100,27 @@ body select {
 .personagem-info,
 .tabela-box,
 #nomeContainer {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 /* ficha personagem */
 .info-box {
   display: flex;
   flex-wrap: wrap;
-  border: 1px solid #ccc;
+  border: 1px solid var(--divisores);;
   border-radius: 10px;
   padding: 10px;
-  background-color: #f9f9f9;
+  background-color: var(--subcontainer);
 }
 
 .info-item {
-  flex: 1 1 calc(33.333% - 20px);
+  flex: 1 1 1 calc(33.333% - 20px);
   margin: 10px;
+  margin-right: 0px;
+}
+
+.top {
+  margin-bottom: 24px;
 }
 
 .info-item label {
@@ -90,19 +137,92 @@ body select {
   font-size: 0.9em;
 }
 
-.top input {
-  width: 40%;
+.atual {
+  width: 78px;
 }
 
-.bottom input {
-  width: 25.5%
+.maxima {
+  width: 46px !important;
+}
+
+.mitigacao {
+  width: 52px !important;
+}
+
+.gasto {
+  width: 38px !important;
+  border-radius: 0px;
+  border-right: none;
+  border-left: none;
+}
+
+.somar,
+.subtrair {
+  height: 36px;
+  width: 22px;
+  font-weight: bold;
+}
+
+.somar {
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
 
 .tabela-box {
-  border: 1px solid #ccc;
+  border: 1px solid var(--divisores);;
   border-radius: 10px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: var(--subcontainer);
+}
+
+.recursos-secundarios div {
+  height: 44px;
+  width: 44px;
+  background-color: white;
+  border: 1px solid var(--divisores);;
+  border-radius: 10px;
+  text-align: center;
+  color: #444444;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.recursos-secundarios div h3 {
+  font-size: 0.9em;
+  font-weight: bold;
+  line-height: 10px;
+  padding-top: 8px
+}
+
+.recursos-secundarios div span {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  line-height: 0px;
+  display: block;
+  padding-top: 18px;
+}
+
+.recursos-secundarios div span:focus {
+  background-image: linear-gradient(var(--focus), white) !important;
+}
+
+.divisor-vertical {
+  height: 150px;
+  width: 1px;
+  margin-top: 10px;
+  margin-left: 5px;
+  background-color: var(--divisores);;
+}
+
+.acumulos {
+  margin-top: 8px;
+  margin-left: 5px;
+}
+
+.quantidade {
+  width: 36px;
+  padding-right: 10px;
 }
 
 /* tabelas */
@@ -111,7 +231,7 @@ body select {
 }
 
 .tabela tr {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--divisores);;
 }
 
 /* th,
@@ -145,5 +265,5 @@ td:first-child {
 
 .copiar {
   padding-bottom: 10px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--divisores);;
 }

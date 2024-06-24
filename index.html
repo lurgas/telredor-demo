@@ -15,10 +15,10 @@
   <div id="teste"></div>
 
   <div class="ficha-personagem">
-    <form id="ficha" name="ficha" onsubmit="event.preventDefault();">
+    <form id="personagem" name="personagem" onsubmit="event.preventDefault();">
       <div id="nomeContainer">
         <label>Nome: </label>
-        <select id="nome" name="nome">
+        <select id="nome" name="nome" onchange="carregarFormularios(this.value);">
           <option value="krom">Krom</option>
           <option value="leia">Léia</option>
           <option value="thabata">Thabata</option>
@@ -27,47 +27,94 @@
           <option value="theodore">Theodore</option>
           <option value="ramhaurg">Ramhaurg</option>
         </select>
-        <button class="salvar" onclick="salvarFormulario('ficha');">Salvar</button>
-        <button class="carregar" onclick="pegarDataDoCSV('ficha');">Carregar</button>
+        <button class="salvar" onclick="salvarFormulario('personagem');">Salvar</button>
+        <button class="carregar" onclick="pegarDadosDoCSV('personagem');">Carregar</button>
       </div>
       <div class="personagem-info">
         <div class="info-box">
-          <div class="info-item top">
-            <label>Vitalidade</label>
-            <input type="text" inputmode="numeric" id="vitalidadeAtual" name="vitalidadeAtual" value="100"> /
-            <input type="text" inputmode="numeric" id="vitalidadeMaxima" name="vitalidadeMaxima" value="100">
+          <div class="recursos-primarios">
+            <div class="info-item top">
+              <label>Vitalidade</label>
+              <input id="vitalidadeAtual" class="atual" name="vitalidadeAtual" value="100"> /
+              <input type="number" id="vitalidadeMaxima" class="maxima" name="vitalidadeMaxima" value="100">
+            </div>
+            <div class="info-item bottom">
+              <label>Mitigação & Gasto</label>
+              <input type="text" id="vitalidadeMitigacao" class="mitigacao" name="vitalidadeMitigacao" value="0%">|<button class="somar" onclick="aplicarGastosNosRecursos('vitalidade',1);">+</button><input type="number"
+                id="vitalidadeGasto" class="gasto" value="0" onkeydown="enterNoInputDoGasto(event,'vitalidade');"
+                onkeyup="mostrarValorAtualizadoDoRecursoNoInput('vitalidade',this.value);"><button class="subtrair"
+                onclick="aplicarGastosNosRecursosPeloInput('vitalidade',-1);">-</button>
+            </div>
           </div>
-          <div class="info-item top">
-            <label>Estamina</label>
-            <input type="text" inputmode="numeric" id="estaminaAtual" name="estaminaAtual" value="100"> /
-            <input type="text" inputmode="numeric" id="estaminaMaxima" name="estaminaMaxima" value="100">
+          <div class="recursos-primarios">
+            <div class="info-item top">
+              <label>Estamina</label>
+              <input id="estaminaAtual" class="atual" name="estaminaAtual" value="100"> /
+              <input type="number" id="estaminaMaxima" class="maxima" name="estaminaMaxima" value="100">
+            </div>
+            <div class="info-item bottom">
+              <label>Mitigação & Gasto</label>
+              <input type="text" id="estaminaMitigacao" class="mitigacao" name="estaminaMitigacao" value="0%">|<button class="somar" onclick="aplicarGastosNosRecursos('estamina',1);">+</button><input type="number"
+                id="estaminaGasto" class="gasto" value="0" onkeydown="enterNoInputDoGasto(event,'estamina');"
+                onkeyup="mostrarValorAtualizadoDoRecursoNoInput('estamina',this.value);"><button class="subtrair"
+                onclick="aplicarGastosNosRecursos('estamina',-1);">-</button>
+            </div>
           </div>
-
-          <div class="info-item top">
-            <label>Mana</label>
-            <input type="text" inputmode="numeric" id="manaAtual" name="manaAtual" value="100"> /
-            <input type="text" inputmode="numeric" id="manaMaxima" name="manaMaxima" value="100">
+          <div class="recursos-primarios">
+            <div class="info-item top">
+              <label>Mana</label>
+              <input id="manaAtual" class="atual" name="manaAtual" value="100"> /
+              <input type="number" id="manaMaxima" class="maxima" name="manaMaxima" value="100">
+            </div>
+            <div class="info-item bottom">
+              <label>Mitigação & Gasto</label>
+              <input type="text" id="manaMitigacao" class="mitigacao" name="manaMitigacao" value="0%">|<button class="somar" onclick="aplicarGastosNosRecursos('mana',1);">+</button><input type="number"
+                id="estaminaGasto" class="gasto" value="0" onkeydown="enterNoInputDoGasto(event,'mana');"
+                onkeyup="mostrarValorAtualizadoDoRecursoNoInput('mana',this.value);"><button class="subtrair"
+                onclick="aplicarGastosNosRecursos('mana',-1);">-</button>
+            </div>
           </div>
-          <div class="info-item bottom">
-            <label>Mitigação & Gasto</label>
-            <input type="text" id="vitalidadeMitigacao" name="vitalidadeMitigacao" value="0%"> |
-            <button class="somar">+</button>
-            <input type="text" inputmode="numeric" id="vitalidadeGasto" value="0">
-            <button class="subtrair">-</button>
+          <div class="recursos-secundarios">
+            <div><span contenteditable="true" class="ac"></span>
+              <h3>C.C.</h3>
+            </div>
+            <div><span contenteditable="true" class="speed"></span>
+              <h3>C.M.</h3>
+            </div>
+            <div><span contenteditable="true" class="vision"></span>
+              <h3>MOV.</h3>
+            </div>
           </div>
-          <div class="info-item bottom">
-            <label>Mitigação & Gasto</label>
-            <input type="text" id="estaminaMitigacao" name="estaminaMitigacao" value="0%"> |
-            <button class="somar">+</button>
-            <input type="text" inputmode="numeric" id="estaminaGasto" value="0">
-            <button class="subtrair">-</button>
-          </div>
-          <div class="info-item bottom">
-            <label>Mitigação & Gasto</label>
-            <input type="text" id="manaMitigacao" name="manaMitigacao" value="0%"> |
-            <button class="somar">+</button>
-            <input type="text" inputmode="numeric" id="estaminaGasto" value="0">
-            <button class="subtrair">-</button>
+          <div class="divisor-vertical"></div>
+          <div class="acumulos">
+            <table>
+              <tr>
+                <th></th>
+                <th class="quantidade">Qtd.</th>
+                <th>Tipo</th>
+              </tr>
+              <tr>
+                <td>
+                  1
+                </td>
+                <td>
+                  <input class="quantidade"/>
+                </td>
+                <td>
+                  <select class="acumulo-tipo" />Tipo
+                    <option value="perfurante">Perfurante</option>
+                    <option value="cortante">Cortante</option>
+                    <option value="fogo">Fogo</option>
+                    <option value="gelo">Gelo</option>
+                    <option value="luz">Luz</option>
+                    <option value="necrotico">Necrótico</option>
+                    <option value="nulo">Nulo</option>
+                    <option value="perfurante">Perfurante</option>
+                    <option value="raio">Raio</option>
+                    <option value="sombras">Sombras</option>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
@@ -78,7 +125,6 @@
         <button>Control+V</button> | <input id="neutra" />
       </div>
       <form id="formularioTurno" name="turno" onsubmit="event.preventDefault();">
-        <section id='turnoRecursos'></section>
         <h3 class="block-it">Turno</h3>
         <button class="block-it" class="encerrar" onclick="encerrarTurno();">Encerrar turno</button>
         <table class="tabela" id="turno">
@@ -90,7 +136,7 @@
             <th>Efeito</th>
           </tr>
           <tr>
-            <td><button type="button" class="remover" onclick="removerAcao(this);">x</button></td>
+            <td><button type="button" class="remover" onclick="removerAcaoDaTabelaTurno(this);">x</button></td>
             <td>Placeholder</td>
             <td>Placeholder</td>
             <td>Placeholder</td>
@@ -99,15 +145,13 @@
         </table>
       </form>
     </div>
-
     <div class="tabela-box">
       <form id="acao" name="acao" onsubmit="event.preventDefault();">
-        <input type="text" id="pesquisar" onkeyup="pesquisarAcao();" placeholder="Pesquisar.."> |
         <button type="button" class="salvar" onclick="salvarFormulario('acao');">Salvar</button>
-        <button type="button" class="carregar" onclick="pegarDataDoCSV('acao');">Carregar</button>
+        <button type="button" class="carregar" onclick="pegarDadosDoCSV('acao');">Carregar</button>
         <table class="tabela" id="acoes">
           <tr>
-            <th></th>
+            <th class="remover"></th>
             <th>Nome</th>
             <th>Recurso</th>
             <th>Custo</th>
@@ -117,18 +161,18 @@
             <td>
             </td>
             <td>
-              <input id="acaoNome" class="text" name="nome" />
+              <input id="acaoNome" class="text" name="nome" onkeyup="pesquisarAcaoPeloNome();" />
             </td>
             <td>
               <select id="acaoRecurso" name="recurso">
-                <option value="estamina">Estamina</option>
-                <option value="mana">Mana</option>
-                <option value="vitalidade">Vitalidade</option>
-                <option value="nenhum" selected="selected">Nenhum</option>
+                <option value="Estamina">Estamina</option>
+                <option value="Mana">Mana</option>
+                <option value="Vitalidade">Vitalidade</option>
+                <option value="Nenhum" selected="selected">Nenhum</option>
               </select>
             </td>
             <td>
-              <input type="text" inputmode="numeric" id="acaoCusto" class="custo" name="custo" />
+              <input type="number" id="acaoCusto" class="custo" name="custo" />
               <!--<div class="dropdown">
                       <button id="custos" class="dropdown">A</button>
                       <div id="custoOpcoes" class="dropdown-content">
@@ -140,7 +184,7 @@
             </td>
           </tr>
           <tr>
-            <td><button type="button" class="adicionar" onclick="adicionarAcao(this);">+</button></td>
+            <td><button type="button" class="adicionar" onclick="adicionarAcaoNaTabelaTurno(this);">+</button></td>
             <td>A</td>
             <td>Estamina</td>
             <td>2</td>
