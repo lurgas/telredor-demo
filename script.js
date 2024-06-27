@@ -178,11 +178,6 @@ function mostrarValorAtualizadoDoRecursoNoInput(recurso, valorGasto) {
   }
 }
 
-function mostrarValorAtualizadoDoRecurso(recurso){
-  gastoDoInput = document.getElementById(recurso+'Gasto')
-  if(!gastoDoInput || !gas) console.log('a')
-}
-
 function enterNoInputDoGasto(evento, recurso) {
   if (evento.keyCode === 13) {
     return aplicarGastosNosRecursosPeloInput(recurso, -1)
